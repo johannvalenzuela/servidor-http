@@ -7,17 +7,21 @@ import (
 	"log"
 )
 
-func test(w http.ResponseWriter, r *http.Request){
-	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path", r.URL.Path)
-	fmt.Println("scheme", r.URL.Scheme)
-	fmt.Println(r.Form["url_long"])
-	for k, v := range r.Form {
+func test(res http.ResponseWriter, req *http.Request){
+	req.ParseForm()
+	//fmt.Println(req.Form)
+	//fmt.Println("path", req.URL.Path)
+	//fmt.Println("scheme", req.URL.Scheme)
+	for k, v := range req.Form {
 		fmt.Println("key:", k)
 		fmt.Println("val:", strings.Join(v,""))
 	}
-	fmt.Fprintf(w,"HOLAAAAA")
+	
+	res.Header().Set("Content-Type", "text/html")
+	fmt.Println("/documentRoot/" + req.URL.Path[1:])
+	http.ServeFile(res , req, "/documentRoot/" + req.URL.Path[1:])
+	
+	//fmt.Fprintf(res,"HOLAAAAA")
 }
 
 func main(){

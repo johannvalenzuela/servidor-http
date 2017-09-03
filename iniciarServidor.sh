@@ -1,3 +1,2 @@
 #!/bin/bash
-
-go run server.go
+sudo apt-get install -y golang && go build && go run server.go
